@@ -2,4 +2,4 @@
 
 this is a ML course.
 
-jupyter reference:
+jupyter reference: https://github.com/hdouhua/pick-up-python
