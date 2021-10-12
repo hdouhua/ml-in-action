@@ -1,0 +1,20 @@
+{
+    "python.linting.pylintEnabled": true,
+    "python.formatting.provider": "yapf",
+    "python.pythonPath": "~/miniconda3/envs/fine/bin/python3",
+    "python.autoComplete.extraPaths": [
+        "~/miniconda3/envs/fine/lib/python3.7/site-packages"
+    ],
+    "python.analysis.extraPaths": [
+        "~/miniconda3/envs/fine/lib/python3.7/site-packages"
+    ],
+    //"python.envFile": "",
+    // configure code-runner
+    // "code-runner.executorMap": {
+    //     "python": "export $(cat path_to_env/.env); python -u"
+    // },
+    "code-runner.runInTerminal": true,
+    "jupyter.jupyterServerType": "local",
+    "jupyter.sendSelectionToInteractiveWindow": true,
+    
+}
