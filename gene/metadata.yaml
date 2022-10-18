@@ -17,5 +17,5 @@ rights: 版权归作者所有
 # publisher:
 cover-image: ./css/cover.jpg
 css: 
-  - ./css/md.css
+  - ./css/my.css
 ...
