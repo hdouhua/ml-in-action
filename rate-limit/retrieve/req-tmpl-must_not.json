@@ -1,0 +1,56 @@
+{
+  "size": 0,
+  "aggs": {
+    "0": {
+      "terms": {
+        "field": "j.IPAddress.keyword",
+        "order": {
+          "_count": "desc"
+        },
+        "size": 50
+      },
+      "aggs": {
+        "1": {
+          "date_histogram": {
+            "field": "@timestamp",
+            "fixed_interval": "1m",
+            "time_zone": "Asia/Singapore"
+          }
+        }
+      }
+    }
+  },
+  "fields": [
+    {
+      "field": "@timestamp",
+      "format": "date_time"
+    },
+    {
+      "field": "j.Time",
+      "format": "date_time"
+    }
+  ],
+  "_source": false,
+  "query": {
+    "bool": {
+      "filter": [
+        {
+          "range": {
+            "@timestamp": {
+              "format": "strict_date_optional_time",
+              "gte": "2022-10-28T13:00:00.000Z",
+              "lte": "2022-10-30T15:30:00.000Z"
+            }
+          }
+        }
+      ],
+      "must_not": [
+        {
+          "match_phrase": {
+            "j.URL": "/event/getfavouriteeventscount"
+          }
+        }
+      ]
+    }
+  }
+}
