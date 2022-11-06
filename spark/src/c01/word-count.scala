@@ -2,7 +2,7 @@ import org.apache.spark.rdd.RDD
 
 // 第一步，读取内容
 
-// 这里的下划线"_"是占位符，代表数据文件的根目录
+// 设置数据文件的根目录
 val rootPath: String = "/home/dao/spk"
 val file: String = s"${rootPath}/wikiOfSpark.txt"
  
