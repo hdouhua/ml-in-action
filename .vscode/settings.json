@@ -1,12 +1,13 @@
 {
     "python.linting.pylintEnabled": true,
     "python.formatting.provider": "yapf",
-    "python.pythonPath": "~/miniconda3/envs/fine/bin/python3",
+    "python.pythonPath": "~/opt/miniconda3/envs/finlab/bin/python3",
     "python.autoComplete.extraPaths": [
-        "~/miniconda3/envs/fine/lib/python3.7/site-packages"
+        "~/opt/miniconda3/envs/finlab/lib/python3.9/site-packages"
     ],
     "python.analysis.extraPaths": [
-        "~/miniconda3/envs/fine/lib/python3.7/site-packages"
+        "~/opt/miniconda3/envs/finlab/lib/python3.9/site-packages",
+        "./first-ml-model/app"
     ],
     //"python.envFile": "",
     // configure code-runner
@@ -16,5 +17,4 @@
     "code-runner.runInTerminal": true,
     "jupyter.jupyterServerType": "local",
     "jupyter.sendSelectionToInteractiveWindow": true,
-    
 }
