@@ -34,18 +34,22 @@ Serve a machine learning model using scikit-learn, FastAPI and Docker.
 ## train model
 
 ```shell
-cd models
-python ml/train.py
+# with sys.path in the file train.py
+python ./models/ml/train.py
+
+# or using .env file with environment variable PYTHONPATH
+export $(cat .env); python ./models/ml/train.py
 ```
 
 ## create api
 
-TBD
+please refer to [entry](./app/main.py) and [routes](./app/routes/)
 
 ## run and test
 
 ```shell
 # start site
+cd app
 uvicorn main:app --port 8000
 
 # predict
@@ -56,7 +60,7 @@ curl -X POST "http://127.0.0.1:8000/v1/iris/predict" -H\
 | jq
 ```
 
-can open swagger ui at <http://127.0.0.1:8000/docs>
+also can open swagger ui at <http://127.0.0.1:8000/docs>
 
 ## deploy in Docker
 
@@ -69,6 +73,44 @@ to chekc if scikit-learn package is installed successfully
 ```shell
 docker run --rm ml-alpine python -c "import sklearn; sklearn.show_versions()"
 ```
+## package app
+
+install python `build` or `setuptools`.([Packaging tool recommendations](https://packaging.python.org/en/latest/guides/tool-recommendations/#packaging-tool-recommendations))
+
+or easily use [`hatch`](https://hatch.pypa.io/latest/config/build/).
+
+>please use `twine` for uploading distributions to PyPI.
+
+in this case using `build` for demo,
+
+install build tool
+
+````
+pip install build
+````
+
+create and edit `setup.py` or `pyproject.toml`(highly recommended), please refer to [setup.py](./setup.py).
+
+pack (source distribution)
+
+```shell
+python -m build --sdist --outdir build
+python setup.py sdist -o build
+python -m build --wheel -o build
+```
+
+to use (working in development mode)
+
+```shell
+# will run setup.py
+python -m pip install -e .
+```
+
+for more reference
+
+- [Packaging and distributing projects](https://packaging.python.org/en/latest/guides/distributing-packages-using-setuptools/)
+- [setuptools Quickstart](https://setuptools.pypa.io/en/latest/userguide/quickstart.html)
+- [sample code of setuptools](https://github.com/pypa/sampleproject/blob/main/setup.py)
 
 ## appendix
 

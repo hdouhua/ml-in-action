@@ -3,6 +3,8 @@
 *.pdf
 *.zip
 note
+build/
+dist/
 
 #
 # python
@@ -12,3 +14,7 @@ note
 __pycache__/
 *.py[cod]
 *$py.class
+
+.python-version
+.env*
+*.egg-info/
