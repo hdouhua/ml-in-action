@@ -1,12 +1,13 @@
 {
     "python.linting.pylintEnabled": true,
+    "python.linting.enabled": true,
     "python.formatting.provider": "yapf",
     "python.autoComplete.extraPaths": [
         "~/opt/miniconda3/envs/finlab/lib/python3.9/site-packages"
     ],
     "python.analysis.extraPaths": [
         "~/opt/miniconda3/envs/finlab/lib/python3.9/site-packages",
-        "./first-ml-model/app"
+        "${workspaceFolder}/ml-model-serving/app"
     ],
     //"python.envFile": "",
     // configure code-runner

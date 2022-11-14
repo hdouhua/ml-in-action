@@ -1,0 +1,15 @@
+; https://github.com/kubeflow/examples/blob/master/.pylintrc
+
+[BASIC]
+good-names=df,clf
+
+[MASTER]
+init-hook='import sys; sys.path.append("./ml-model-serving/app")'
+#jobs=2
+extension-pkg-whitelist=pydantic
+
+[FORMAT]
+max-line-length=120
+
+[MESSAGES CONTROL]
+disable=C0114,C0115,C0116,R0903

@@ -33,3 +33,18 @@ package-dir = {"" = "app"}
 
 [project.urls]
 Home = "https://github.com/hdouhua/ml-in-action/tree/main/first-ml-model"
+
+[tool.yapf]
+spaces_before_comment = 4
+split_before_logical_operator = true
+column_limit = 120
+indent_width = 4
+
+[tool.pylint."MESSAGES CONTROL"]
+max-line-length = 120
+good-names = [
+    "df",
+    "clf",
+]
+disable = "C0114,C0115,C0116,R0903"
+extension-pkg-whitelist="pydantic"
