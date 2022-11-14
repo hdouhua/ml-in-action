@@ -21,14 +21,14 @@ Serve a machine learning model using scikit-learn, FastAPI and Docker.
    pip install -U scikit-learn
    ```
 
-- install FastAPI
+- install FastAPI and ASGI web server
 
    <https://fastapi.tiangolo.com/>
 
    ```shell
    pip install fastapi
    # one of ASGI (Asynchronous Server Gateway Interface) 
-   pip install "uvicorn[standard]"
+   pip install "uvicorn"
    ```
 
 ## train model
@@ -53,14 +53,14 @@ cd app
 uvicorn main:app --port 8000
 
 # predict
-curl -X POST "http://127.0.0.1:8000/v1/iris/predict" -H\
+curl -X POST "http://localhost:8000/v1/iris/predict" -H\
  "accept: application/json"\
  -H "Content-Type: application/json"\
  -d "{\"data\":[[4.8,3,1.4,0.3],[2,1,3.2,1.1]]}"\
 | jq
 ```
 
-also can open swagger ui at <http://127.0.0.1:8000/docs>
+also can test via swagger ui at <http://localhost:8000/docs>
 
 ## deploy in Docker
 
@@ -73,7 +73,8 @@ to chekc if scikit-learn package is installed successfully
 ```shell
 docker run --rm ml-alpine python -c "import sklearn; sklearn.show_versions()"
 ```
-## package app
+
+## pack app (source distribution)
 
 install python `build` or `setuptools`.([Packaging tool recommendations](https://packaging.python.org/en/latest/guides/tool-recommendations/#packaging-tool-recommendations))
 
@@ -85,13 +86,13 @@ in this case using `build` for demo,
 
 install build tool
 
-````
+````shell
 pip install build
 ````
 
 create and edit `setup.py` or `pyproject.toml`(highly recommended), please refer to [setup.py](./setup.py).
 
-pack (source distribution)
+pack
 
 ```shell
 python -m build --sdist --outdir build
