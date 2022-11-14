@@ -1,5 +1,7 @@
-import sys
-sys.path.append(".")
+# hack module search path
+# import sys
+# sys.path.append(".")
+# print(sys.path)
 
 from sklearn import datasets
 from sklearn.pipeline import Pipeline
