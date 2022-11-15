@@ -1,1 +1,1 @@
-clf = None
+model = None    # pylint: disable=[invalid-name]
