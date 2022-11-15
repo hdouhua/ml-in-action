@@ -1,10 +1,11 @@
 ; https://github.com/kubeflow/examples/blob/master/.pylintrc
+; https://github.com/PyCQA/bandit/blob/main/pylintrc
 
 [BASIC]
-good-names=df,clf
+good-names=x,X,y,i,j,df,clf
 
 [MASTER]
-init-hook='import sys; sys.path.append("./ml-model-serving/app")'
+init-hook='import sys; sys.path.append("./ml-model-serving")'
 #jobs=2
 extension-pkg-whitelist=pydantic
 

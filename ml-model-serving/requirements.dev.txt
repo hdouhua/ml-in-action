@@ -1,0 +1,7 @@
+pytest
+pytest-cov
+pylint
+toml
+yapf
+isort
+build

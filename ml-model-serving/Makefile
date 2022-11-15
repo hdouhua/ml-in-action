@@ -1,5 +1,6 @@
 
 SRC=./app
+TEST=./tests
 OUT=./build
 
 compile:
@@ -8,8 +9,18 @@ compile:
 clean-pyc:
 	find . -name '__pycache__' -exec rm -fr {} +
 
-test:
-	#
+test: clean-test
+	export `cat ./.env` && pytest -s -v
+
+test-cov: clean-pyc clean-test
+	export `cat ./.env` && pytest --cov-report html `find ./app -type d -exec echo -n '--cov {} ' \;`
+# find ./app -type d -print0  | xargs -0 printf -- "--cov %s "
+
+clean-test:
+	rm -f .coverage
+	rm -f .coverage.*
+	rm -rf htmlcov
+	rm -rf .pytest_cache
 
 dist:
 	python -m build --sdist --outdir $(OUT)
@@ -20,14 +31,16 @@ dist-verf:
 clean-dist:
 	rm -rf $(SRC)/*.egg-info
 
-lint:
-	cat $(SRC)/.env && pylint $(SRC)/
-	# --reports=y --jobs=4 
+lint: format
+	export `cat ./.env` && pylint --recursive=y --jobs=2 --output-format=colorized $(SRC)/
+	# --reports=y
 
 format:
-	yapf --in-place --recursive $(SRC)/
+	isort $(SRC) $(TEST)
+	yapf --in-place --recursive $(SRC) $(TEST)
 
-clean: clean-pyc clean-dist
+clean: clean-pyc clean-test clean-dist
 
+checks: test lint clean
 
-.PHONY: clean compile
+.PHONY: checks

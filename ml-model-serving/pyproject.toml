@@ -42,9 +42,13 @@ indent_width = 4
 
 [tool.pylint."MESSAGES CONTROL"]
 max-line-length = 120
-good-names = [
-    "df",
-    "clf",
-]
+good-names = [ "x", "X", "y", "df", "clf",]
 disable = "C0114,C0115,C0116,R0903"
 extension-pkg-whitelist="pydantic"
+
+[tool.isort]
+profile = "hug"
+known_third_party = ["fastapi", "pydantic", "sklearn", "joblib"]
+
+[tool.coverage.run]
+parallel = true
