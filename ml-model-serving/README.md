@@ -35,10 +35,10 @@ Serve a machine learning model using scikit-learn, FastAPI and Docker.
 
 ```shell
 # with sys.path in the file train.py
-python ./models/ml/train.py
+python ./app/models/ml/train.py
 
 # or using .env file with environment variable PYTHONPATH
-export $(cat .env); python ./models/ml/train.py
+export $(cat .env); python ./app/models/ml/train.py
 ```
 
 ## create api
@@ -49,8 +49,7 @@ please refer to [entry](./app/main.py) and [routes](./app/routes/)
 
 ```shell
 # start site
-cd app
-uvicorn main:app --port 8000
+uvicorn app.main:app --port 8000
 
 # predict
 curl -X POST "http://localhost:8000/v1/iris/predict" -H\
@@ -115,77 +114,6 @@ for more reference
 
 ## appendix
 
-### install python env
-
-install pyenv
-
-```shell
-pip install pyenv
-```
-
-after installed add PATH to `.bashrc` or `.zshrc`
-
-```shell
-export PYENV_ROOT="$HOME/.pyenv"
-command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init -)"
-
-# init pyenv automatically
-#eval "$(pyenv virtualenv-init -)"
-```
-
-list all supported pytnon above 3.1x in pyenv
-
-```shell
-pyenv install --list | grep " 3\.1\d"
-pyenv install -v 3.11.0
-```
-
-pyenv commands reference
-
-```shell
-pyenv commands
-pyenv versions
-
-# get where the python / pip is installed
-pyenv which python
-pyenv which pip
-
-# create virtual python env
-pyenv virtualenv <python_version> <environment_name>
-
-pyenv local <environment_name>
-
-pyenv activate <environment_name>
-pyenv deactivate
-
-# uninstall/delete virtualenv
-pyenv uninstall <environment_name>
-# or
-pyenv virtualenv-delete <environment_name>
-```
-
-for more, please refer to <https://realpython.com/intro-to-pyenv>
-
-### code format
-
-- install yapf
-
-   ```shell
-   pip install yapf
-   ```
-
-- create and edit `.style.yapf` file, the setting is key=value pair
-
-   please refer to [.style.yapf](./.style.yapf)
-
-- run command
-
-   ```shell
-   # run code format recursively and write back to file
-   yapf -i -r app/
-   ```
-
 ### docker tips
 
 ```shell
@@ -198,5 +126,6 @@ docker rm $(docker ps -a -f status=exited -f status=created -q)
 
 - [machine-learning-alpine image](https://github.com/Docker-Hub-frolvlad/docker-alpine-python-machinelearning/blob/master/Dockerfile)
 - [get docker image size](https://gist.github.com/MichaelSimons/fb588539dcefd9b5fdf45ba04c302db6)
+- [fastapi manchine learning skeleton](https://github.com/eightBEC/fastapi-ml-skeleton)
 - [](https://medium.com/analytics-vidhya/serve-a-machine-learning-model-using-sklearn-fastapi-and-docker-85aabf96729b)
 - [](https://engineering.rappi.com/serve-your-first-model-with-scikit-learn-flask-docker-df95efbbd35e)
