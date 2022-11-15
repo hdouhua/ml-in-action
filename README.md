@@ -4,7 +4,7 @@ this is a [ML](./day-day-up/ml-concepts.md) Journey.
 
 jupyter reference: https://github.com/hdouhua/pick-up-python
 
-## tips of python programming and machine learning
+## toolchain of python programming and machine learning
 
 ### python env
 
@@ -138,7 +138,7 @@ more pylint reference,
 - [Command line options](https://pylint.pycqa.org/en/latest/user_guide/usage/run.html#command-line-options)
 - [checkers reference](https://pylint.pycqa.org/en/latest/user_guide/checkers/features.html)
 
-other enhancement tools, such as [mypy](https://mypy.readthedocs.io/en/stable/index.html) is a static type checker and [bandit](https://bandit.readthedocs.io/en/latest/start.html) is a tool designed to find common security issues.
+other enhancement tools, such as [`mypy`](https://mypy.readthedocs.io/en/stable/index.html) is a static type checker and [`bandit`](https://bandit.readthedocs.io/en/latest/start.html) is a tool designed to find common security issues.
 
 ### test
 
@@ -169,7 +169,7 @@ pytest --cov-report html --cov <source_module1> --cov <source_module2> <test_cas
 
 ### pack - source/module distribution
 
-there are many tools for it, such as tradditional `setuptools` and `twine`, in new way `build` and some easier tools [`hatch`](https://hatch.pypa.io/latest/intro/) and [flit](https://flit.pypa.io/en/stable/).
+there are many tools for it, such as tradditional `setuptools` and `twine`, in new way `build` and some easier tools [`hatch`](https://hatch.pypa.io/latest/intro/) and [`flit`](https://flit.pypa.io/en/stable/).
 
 use `build` with setuptools as an example,
 
@@ -201,7 +201,17 @@ pip install -e
 
 publish package to PyPI, in tradditional way by the tool [`twine`](https://twine.readthedocs.io/en/stable/).
 
-## reference
+## flow of machine learning
+
+one of classic ML workflow
+
+![](./res/images/classic-ai-workflow.png)
+
+one of ML lifecyle
+
+![](./res/images/ml-lifecycle.png)
+
+## reference & further reading
 
 PEP stands for Python Enhancement Proposal
 
