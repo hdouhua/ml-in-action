@@ -17,10 +17,10 @@ test-cov: clean-pyc clean-test
 # find ./app -type d -print0  | xargs -0 printf -- "--cov %s "
 
 clean-test:
+	rm -rf .pytest_cache
 	rm -f .coverage
 	rm -f .coverage.*
 	rm -rf htmlcov
-	rm -rf .pytest_cache
 
 dist:
 	python -m build --sdist --outdir $(OUT)
