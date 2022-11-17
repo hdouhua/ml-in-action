@@ -21,7 +21,7 @@
     },
     "python.testing.pytestEnabled": true,
     "python.testing.pytestArgs": [
-        "ml-model-serving"
+        "ml-model-serving/tests"
     ],
     "python.testing.unittestEnabled": false,
 }
