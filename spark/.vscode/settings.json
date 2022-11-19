@@ -1,7 +1,0 @@
-{
-    "python.linting.pylintEnabled": true,
-    "python.formatting.provider": "yapf",
-    "python.pythonPath": "~/opt/miniconda3/envs/spark/bin/python",
-    "jupyter.jupyterServerType": "local",
-    "jupyter.sendSelectionToInteractiveWindow": true,
-}
