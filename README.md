@@ -167,6 +167,21 @@ pytest --cov-report html --cov <source_module1> --cov <source_module2> <test_cas
 >multiple option `--cov` for cover multiple source code folders, because `pytest-cov` don't support recursive folder (except for python modules with the file `__init__.py`).  
 >if you'd like to automatically run pytest code coverage in recursive, please refer to [Makefile](./ml-model-serving/Makefile).
 
+### benchmark
+
+[pytest-benchmark](https://pytest-benchmark.readthedocs.io/en/latest/) or [time.timeit](https://docs.python.org/3/library/timeit.html)
+
+```python
+import timeit
+from functools import partial
+from numpy import percentile
+
+def get_run_time(func, *args):
+    repeat = 3
+    number = 200
+    return percentile(timeit.Timer(partial(func, *args)).repeat(repeat=repeat, number=number), 90) / number
+```
+
 ### pack - source/module distribution
 
 there are many tools for it, such as tradditional `setuptools` and `twine`, in new way `build` and some easier tools [`hatch`](https://hatch.pypa.io/latest/intro/) and [`flit`](https://flit.pypa.io/en/stable/).
