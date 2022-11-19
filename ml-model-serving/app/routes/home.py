@@ -8,7 +8,7 @@ async def info():
     return {"message": "hello world!"}
 
 
-#comment testing
+# comment testing
 @app_home.get('/ver', tags=['Intro'])
 async def ver():
     """get version"""
