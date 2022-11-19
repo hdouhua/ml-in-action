@@ -1,7 +1,21 @@
 {
-    "python.linting.pylintEnabled": true,
     "python.linting.enabled": true,
+    "python.linting.flake8Enabled": true,
+    // "python.linting.pylintEnabled": true,
+    "python.linting.banditEnabled": true,
+    "python.linting.banditArgs": [
+        "-r",
+        "--ini",
+        "${workspaceFolder}/.bandit.ini",
+    ],
     "python.formatting.provider": "yapf",
+    "[python]": {
+        "editor.formatOnSave": true,
+        "editor.codeActionsOnSave": {
+            "source.organizeImports": true
+        },
+    },
+
     "python.autoComplete.extraPaths": [
         "~/opt/miniconda3/envs/finlab/lib/python3.9/site-packages"
     ],
@@ -16,9 +30,7 @@
     // },
     "code-runner.runInTerminal": true,
     "jupyter.sendSelectionToInteractiveWindow": true,
-    "[python]": {
-        "editor.formatOnSave": true,
-    },
+
     "python.testing.pytestEnabled": true,
     "python.testing.pytestArgs": [
         "ml-model-serving/tests"

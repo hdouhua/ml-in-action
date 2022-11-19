@@ -39,6 +39,11 @@ format:
 	isort $(SRC) $(TEST)
 	yapf --in-place --recursive $(SRC) $(TEST)
 
+bandit:
+	# bandit -r . -c pyproject.toml
+	# or
+	bandit -r . --ini ../.bandit.ini
+
 clean: clean-pyc clean-test clean-dist
 
 checks: test lint clean

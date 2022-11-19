@@ -52,3 +52,8 @@ known_third_party = ["fastapi", "pydantic", "sklearn", "joblib"]
 
 [tool.coverage.run]
 parallel = true
+
+[tool.bandit]
+#exclude_dirs = ["./tests"]
+#tests = ["B201", "B301"]
+skips = ["B101", "B601"]
