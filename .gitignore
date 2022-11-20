@@ -1,6 +1,5 @@
 .virtual_documents/
 .DS_Store
-*.pdf
 *.zip
 note
 build/
