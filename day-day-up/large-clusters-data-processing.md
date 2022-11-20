@@ -6,7 +6,7 @@
 
 沿着时间线看一下超大规模数据处理的重要技术以及它们产生的年代
 
-![](https://static001.geekbang.org/resource/image/54/ca/54a0178e675d0054cda83b5dc89b1dca.png?wh=5000*3092 |width=50%)
+<img src="https://static001.geekbang.org/resource/image/54/ca/54a0178e675d0054cda83b5dc89b1dca.png?wh=5000*3092" width="50%" />
 
 - 石器时代
 
@@ -30,7 +30,7 @@ MapReduce 诞生之前的时期。
 
 站在 2008 年春夏之交来设计下一代大规模数据处理框架，一个基本的模型会是图中这样子的：
 
-![](https://static001.geekbang.org/resource/image/53/2e/53aa1aad08b11e6c2db5cf8bb584572e.png?wh=4909*3085 |width=50%)
+<img src="https://static001.geekbang.org/resource/image/53/2e/53aa1aad08b11e6c2db5cf8bb584572e.png?wh=4909*3085" width="35%" />
 
 后面的章节会给补充一些设计和使用大规模数据处理架构的基础知识。同时，也会深入剖析两个与这里的设计理念最接近的大数据处理框架，Apache Spark 和 Apache Beam。
 
@@ -40,7 +40,7 @@ MapReduce 诞生之前的时期。
 
 假设你的电商网站销售 10 亿件商品，已经跟踪了网站的销售记录：商品 id 和购买时间 {product_id, timestamp}，整个交易记录是 1000 亿行数据，TB 级。作为技术负责人，你会怎样设计一个系统，根据销售记录统计去年销量前 10 的商品呢？
 
-![](https://static001.geekbang.org/resource/image/3e/af/3eaea261df4257f0cff4509d82f211af.png?wh=1992*638?wh=1992*638 |width=50%)
+<img src="https://static001.geekbang.org/resource/image/3e/af/3eaea261df4257f0cff4509d82f211af.png?wh=1992*638?wh=1992*638" width="35%" />
 
 Top K 算法当数据规模变大会遇到哪些问题呢？
 
@@ -139,3 +139,8 @@ SLA（Service-Level Agreement），也就是服务等级协议，指的是系统
 ### 小结
 
 定义好一个系统架构的 SLA 对于一个优秀的架构师来说是必不可少的一项技能，也是一种基本素养。特别是当系统架构在不停迭代的时候，有了一个明确的 SLA，我们可以知道下一代系统架构的改进目标以及优化好的系统架构是否比上一代的系统 SLA 更加优秀。
+
+
+## reference
+
+[course](https://time.geekbang.org/column/intro/100025301)
