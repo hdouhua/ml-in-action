@@ -1,0 +1,30 @@
+@hostname = localhost
+@port = 9200
+@baseUrl = http://{{hostname}}:{{port}}
+
+### suggest
+GET {{baseUrl}}/movies/_search
+
+{
+  "suggest": {
+    "text_sugget": {
+      "text": "beautiful mind",
+      "term": {
+        "field": "title"
+      }
+    }
+  }
+}
+### 必须先把字段定义成 completion 类型
+GET {{baseUrl}}/movies/_search
+
+{
+  "suggest": {
+    "completion_suggest": {
+      "regex": "e[l|e]a",
+      "completion": {
+        "field": "title"
+      }
+    }
+  }
+}

@@ -1,0 +1,415 @@
+@hostname = localhost
+@port = 9200
+@baseUrl = http://{{hostname}}:{{port}}
+
+### 创建一个索引 test_copy_to
+PUT {{baseUrl}}/test_copy_to
+
+{
+  "mappings": {
+    "dynamic": false,
+    "properties": {
+      "first_name": {
+        "type": "text",
+        "copy_to": "full_name"
+      },
+      "last_name": {
+        "type": "text",
+        "copy_to": "full_name"
+      },
+      "full_name": {
+        "type": "text"
+      }
+    }
+  }
+}
+
+### 或者批量插入数据
+POST {{baseUrl}}/test_copy_to/_bulk
+
+{ "index": { "_id": 1 }}
+{"first_name":"doudou","last_name":"hu"}
+{ "index": { "_id": 2 }}
+{"first_name":"douhua","last_name":"dao"}
+
+### 对组字段 full_name 查询
+GET {{baseUrl}}/test_copy_to/_search
+
+{
+  "query": {
+    "match": {
+      "full_name": "dao"
+    }
+  }
+}
+###
+GET {{baseUrl}}/test_copy_to/_search
+
+{
+  "query": {
+    "terms": {
+      "full_name": ["douhua","doudou"]
+    }
+  }
+}
+
+### 可能不能被索引
+PUT {{baseUrl}}/test_mapping
+
+{
+  "mappings": {
+    "properties": {
+      "t1": {
+        "type": "keyword",
+        "ignore_above": 5
+      },
+      "t2": {
+        "type": "keyword",
+        "ignore_above": 10
+      }
+    }
+  }
+}
+###
+POST {{baseUrl}}/test_mapping/_doc/1
+
+{
+  "t1": "elk",
+  "t2": "elasticsearch"
+}
+###
+GET {{baseUrl}}/test_mapping/_search
+
+{
+  "query": {
+    "term": {
+      "t1": "elk"
+    }
+  }
+}
+### t2 长度超过设置，不能被搜索到
+GET {{baseUrl}}/test_mapping/_search
+
+{
+  "query": {
+    "term": {
+      "t2": "elasticsearch "
+    }
+  }
+}
+####
+PUT {{baseUrl}}/test_mapping2
+
+{
+  "mappings": {
+    "properties": {
+      "t1": {
+        "type": "keyword",
+        "ignore_above": 5
+      },
+      "t2": {
+        "type": "text",
+        "fields": {
+          "keyword": {
+            "type": "keyword",
+            "ignore_above": 10
+          }
+        }
+      }
+    }
+  }
+}
+
+###
+GET {{baseUrl}}/test_mapping2/_mapping
+
+###
+POST {{baseUrl}}/test_mapping2/_doc/1
+
+{
+  "t1": "elastic",
+  "t2": "elasticsearch"
+}
+###
+POST {{baseUrl}}/test_mapping2/_doc/2
+
+{
+  "t1": "elk",
+  "t2": "elastic search"
+}
+### t1 长度超过设置，不能被搜索到
+GET {{baseUrl}}/test_mapping2/_search
+
+{
+  "query": {
+    "term": {
+      "t1": "elastic"
+    }
+  }
+}
+### t2 长度超过设置，但 text 类型可以被搜索
+GET {{baseUrl}}/test_mapping2/_search
+
+{
+  "query": {
+    "term": {
+      "t2": "elastic"
+    }
+  }
+}
+
+### 创建模版
+PUT {{baseUrl}}/_template/2021
+
+{
+  "index_patterns": [
+    "20*",
+    "movie*"
+  ],
+  "settings": {
+    "number_of_shards": 2,
+    "number_of_replicas": 1
+  },
+  "mappings": {
+    "properties": {
+      "title": {
+        "type": "keyword"
+      },
+      "description": {
+        "type": "keyword"
+      }
+    }
+  }
+}
+### 查看所有模版
+GET {{baseUrl}}/_template
+### 查看模版是否存在，200 存在，404 不存在
+HEAD  {{baseUrl}}/_template/2021
+###
+GET {{baseUrl}}/movies/_settings
+
+### 索引别名操作 ---
+### bulk 操作行尾需要增加一行空行，可以使用content-type:application/x-ndjson
+PUT {{baseUrl}}/_bulk
+Content-Type: application/x-ndjson
+
+{ "index" : { "_index" : "test1", "_id" : "1" } }
+{ "title": "one day"}
+{ "index" : { "_index" : "test2", "_id" : "1" } }
+{ "title": "two brothers"}
+{ "index" : { "_index" : "test3", "_id" : "1" } }
+{ "title": "three squirrel"}
+### create alias
+POST {{baseUrl}}/_aliases
+
+{
+  "actions": [
+    {
+      "add": {
+        "index": "test1",
+        "alias": "a1"
+      }
+    }
+  ]
+}
+### query alias
+GET {{baseUrl}}/_aliases
+###
+GET {{baseUrl}}/test1/_alias
+###
+GET {{baseUrl}}/_alias/a*
+### 用 HEAD 判断索引别名是否存在
+HEAD {{baseUrl}}/_alias/a*
+### delete alias
+POST {{baseUrl}}/_aliases
+
+{
+  "actions": [
+    {
+      "remove": {
+        "index": "test1",
+        "alias": "a1"
+      }
+    }
+  ]
+}
+### rename alias
+POST {{baseUrl}}/_aliases
+
+{
+  "actions": [
+    {
+      "remove": {
+        "index": "test1",
+        "alias": "a1"
+      }
+    },
+    {
+      "add": {
+        "index": "test1",
+        "alias": "a2"
+      }
+    }
+  ]
+}
+### 多个索引指向同一别名 ---
+POST {{baseUrl}}/_aliases
+
+{
+  "actions": [
+    {"add": {"index": "test1", "alias": "a1"}},
+    {"add": {"index": "test2", "alias": "a1"}},
+    {"add": {"index": "test3", "alias": "a1"}}
+  ]
+}
+### 使用数组方式
+POST {{baseUrl}}/_aliases
+
+{
+  "actions": [
+    {"add": {"indices": ["test1", "test2", "test3"], "alias": "a2"}}
+  ]
+}
+### 使用 glob pattern
+POST {{baseUrl}}/_aliases
+
+{
+  "actions": [
+    {"add": {"index": "test*", "alias": "a3"}}
+  ]
+}
+###
+GET {{baseUrl}}/_alias/a*
+###
+POST {{baseUrl}}/_aliases
+
+{
+  "actions": [
+    {
+      "remove": {
+        "index": "test*",
+        "alias": "a1"
+      }
+    },
+    {
+      "remove": {
+        "index": "test*",
+        "alias": "a2"
+      }
+    },
+    {
+      "remove": {
+        "index": "test*",
+        "alias": "a3"
+      }
+    }
+  ]
+}
+
+### 特殊用法
+POST {{baseUrl}}/_aliases
+
+{
+  "actions": [
+    {"add": {"index": "test1", "alias": "a1"}},
+    {"remove_index":{"index":"a1"}}
+  ]
+}
+
+### create filter alias ---
+PUT {{baseUrl}}/test4
+
+{
+  "mappings": {
+    "properties": {
+      "year": {
+        "type": "integer"
+      },
+      "method": {
+        "type": "keyword"
+      }
+    }
+  }
+}
+###
+POST {{baseUrl}}/test4/_bulk
+Content-Type: application/x-ndjson
+
+{"index": {"_id": 1} }
+{"year": 2019,  "method": "GET"}
+{"index": {"_id": 2} }
+{"year": 2018,  "method": "POST"}
+{"index": {"_id": 3} }
+{"year": 2019,  "method": "POST"}
+### create
+POST {{baseUrl}}/_aliases
+
+{
+  "actions": [
+    {
+      "add": {
+        "index": "test4",
+        "alias": "a4",
+        "filter": {
+          "term": {
+            "year": 2019
+          }
+        }
+      }
+    }
+  ]
+}
+### query：比较结果的不同
+GET {{baseUrl}}/test4/_search
+###
+GET {{baseUrl}}/a4/_search
+
+### 索引别名 + 路由 ---
+POST {{baseUrl}}/_aliases
+
+{
+  "actions": [
+    {
+      "add": {
+        "index": "test4",
+        "alias": "a4",
+        "search_routing": "1,2",
+        "index_routing": "1"
+      }
+    }
+  ]
+}
+###
+GET {{baseUrl}}/a4/_search?routing=2
+
+###
+POST {{baseUrl}}/_aliases
+
+{
+  "actions": [
+    {
+      "add": {
+        "index": "test4",
+        "alias": "a1",
+        "is_write_index": true
+      }
+    }
+  ]
+}
+###
+GET {{baseUrl}}/test4/_search
+###
+GET {{baseUrl}}/test4/_alias
+###
+PUT {{baseUrl}}/a4/_doc/4
+
+{
+  "year": 2021,
+  "method": "HEAD"
+}
+###
+GET {{baseUrl}}/a4/_doc/4
+###
+GET {{baseUrl}}/test4
+### routing
+PUT test4/_doc/1?routing

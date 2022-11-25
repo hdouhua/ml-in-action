@@ -1,0 +1,340 @@
+@hostname = localhost
+@port = 9200
+@baseUrl = http://{{hostname}}:{{port}}
+
+
+### 标准分词器
+POST {{baseUrl}}/_analyze
+
+{
+  "analyzer": "standard",
+  "text": "Beautiful Girls"
+}
+
+### bool 查询 ---
+
+### must
+GET {{baseUrl}}/movies/_search
+
+{
+  "query": {
+    "bool": {
+      "must": [
+        {
+          "match": {
+            "title": "Beautiful"
+          }
+        },
+        {
+          "range": {
+            "year": {
+              "gte": 2013
+            }
+          }
+        }
+      ]
+    }
+  }
+}
+
+### should
+GET {{baseUrl}}/movies/_search
+
+{
+  "query": {
+    "bool": {
+      "should": [
+        {
+          "match": {
+            "title": "Beautiful"
+          }
+        },
+        {
+          "range": {
+            "year": {
+              "gte": 2018
+            }
+          }
+        }
+      ]
+    }
+  },
+ "from": 20,
+ "size": 2
+}
+
+### must not
+GET {{baseUrl}}/movies/_search
+
+{
+  "query": {
+    "bool": {
+      "must_not": [
+        {
+          "match": {
+            "title": "Beautiful"
+          }
+        },
+        {
+          "range": {
+            "year": {
+              "lte": 2018,
+              "gte": 1950
+            }
+          }
+        },
+        {
+          "match":{
+            "year":0
+          }
+        }
+      ]
+    }
+  },
+ "from": 20,
+ "size": 2
+}
+
+### filter
+GET {{baseUrl}}/movies/_search
+
+{
+  "query": {
+    "bool": {
+      "must": [
+        {
+          "match": {
+            "title": "Beautiful"
+          }
+        }
+      ],
+      "filter": {
+        "match": {
+          "year": 0
+        }
+      }
+    }
+  }
+}
+
+### 查询输出 ---
+
+### 查询结果过滤 _source
+GET {{baseUrl}}/movies/_search
+
+{
+  "query": {
+    "bool": {
+      "must": [
+        {
+          "match": {
+            "title": "Beautiful"
+          }
+        }
+      ],
+      "filter": {
+        "match": {
+          "year": 0
+        }
+      }
+    }
+  },
+  "_source": ["title", "year"],
+}
+
+### highlight
+GET {{baseUrl}}/movies/_search
+
+{
+  "query": {
+    "bool": {
+      "must": [
+        {
+          "match": {
+            "title": "Beautiful"
+          }
+        }
+      ],
+      "filter": {
+        "match": {
+          "year": 0
+        }
+      }
+    }
+  },
+  "highlight":{
+    "fields": {"title":{} }
+  }
+}
+
+### highlight, pre_tags, post_tags
+GET {{baseUrl}}/movies/_search
+
+{
+  "query": {
+    "match_phrase": {
+      "title":{
+        "query": "beautiful people",
+        "slop": 10
+      }
+    }
+
+  },
+  "highlight":{
+    "fields": {"title":{}, "year":{} },
+    "pre_tags":"<b class='key' style='color:red'>",
+    "post_tags":"</b>"
+  }
+}
+
+### query beautiful + girls
+GET {{baseUrl}}/movies/_search
+
+{
+  "query": {
+    "bool": {
+      "must": [
+        {
+          "match": {
+            "title": "beautiful"
+          }
+        },
+        {
+          "match": {
+            "title": "girls"
+          }
+        }
+      ]
+    }
+  }
+}
+
+###
+GET {{baseUrl}}/movies/_search
+
+{
+  "query": {
+    "match": {
+      "title": {
+        "query": "beautiful girls",
+        "operator": "and"
+      }
+    }
+  }
+}
+
+### term - exactly match
+GET {{baseUrl}}/movies/_search
+
+{
+  "query": {
+    "term": {
+      "title": "beautiful girls"
+    }
+  }
+}
+
+### term - exactly match
+GET {{baseUrl}}/movies/_search
+
+{
+  "query": {
+    "match_phrase": {
+      "title": {
+        "query": "beautiful people",
+        "slop": 20
+      }
+    }
+  }
+}
+
+### term - exactly match
+GET {{baseUrl}}/movies/_search
+
+{
+  "query": {
+    "term": {
+        "title.keyword": "Beautiful Girls"
+    }
+  }
+}
+
+### terms beautiful or girls
+GET {{baseUrl}}/movies/_search
+
+{
+  "query": {
+    "terms": {
+      "title": [
+        "beautiful",
+        "girls"
+      ]
+    }
+  }
+}
+
+###
+GET {{baseUrl}}/movies/_search?q=title:(beautiful girls)
+
+### bool - should
+GET {{baseUrl}}/movies/_search
+
+{
+  "query": {
+    "bool": {
+      "should": [
+        {
+          "match": {
+            "title": "beautiful"
+          }
+        },
+        {
+          "match": {
+            "title": "girls"
+          }
+        }
+      ]
+    }
+  }
+}
+
+###
+GET {{baseUrl}}/movies/_search
+
+{
+  "query": {
+    "match": {
+      "title": "beautiful girls"
+    }
+  }
+}
+
+###
+GET {{baseUrl}}/movies/_search
+
+{
+  "query": {
+    "multi_match": {
+      "query": "girl",
+      "fields": [
+        "title"
+      ],
+      "type": "phrase_prefix"
+    }
+  }
+}
+
+###
+GET {{baseUrl}}/movies/_search
+
+{
+  "query": {
+    "multi_match": {
+      "query": "girl",
+      "fields": [
+        "title"
+      ],
+      "type": "phrase"
+    }
+  }
+}

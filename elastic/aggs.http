@@ -1,0 +1,114 @@
+@hostname = localhost
+@port = 9200
+@baseUrl = http://{{hostname}}:{{port}}
+
+### aggs - avg, max, min, sum
+GET {{baseUrl}}/movies/_search
+
+{
+  "query": {
+    "match": {
+      "title": "beautiful+girls"
+    }
+  },
+  "aggs": {
+    "total": {
+      "avg": {
+        "field":"year"
+      }
+    }
+  }
+}
+### 只看聚合结果 size
+GET {{baseUrl}}/movies/_search
+
+{
+  "query": {
+    "match": {
+      "title": "beautiful+girls"
+    }
+  },
+  "aggs": {
+    "total": {
+      "avg": {
+        "field":"year"
+      }
+    }
+  },
+  "size":0
+}
+### 分组查询
+GET {{baseUrl}}/movies/_search
+
+{
+  "query": {
+    "match": {
+      "title": "beautiful+girls"
+    }
+  },
+  "aggs": {
+    "year_group": {
+      "range": {
+        "field": "year",
+        "ranges": [
+          {
+            "to": 1950
+          },
+          {
+            "from": 1951,
+            "to": 1980
+          },
+          {
+            "from": 1980,
+            "to": 2000
+          },
+          {
+            "from": 2001
+          }
+        ]
+      }
+    }
+  },
+  "size":0
+}
+### 分组查询后，在组内做平均
+GET {{baseUrl}}/movies/_search
+
+{
+  "query": {
+    "match": {
+      "title": "beautiful+girls"
+    }
+  },
+  "aggs": {
+    "year_group": {
+      "range": {
+        "field": "year",
+        "ranges": [
+          {
+            "to": 1950
+          },
+          {
+            "from": 1951,
+            "to": 1980
+          },
+          {
+            "from": 1980,
+            "to": 2000
+          },
+          {
+            "from": 2001
+          }
+        ]
+      },
+      "aggs":{
+        "year_avg":{
+          "avg":{
+            "field": "year"
+          }
+        }
+      }
+    }
+  },
+  "size":0
+}

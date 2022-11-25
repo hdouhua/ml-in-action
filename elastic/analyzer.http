@@ -1,0 +1,188 @@
+@hostname = localhost
+@port = 9200
+@baseUrl = http://{{hostname}}:{{port}}
+
+### standard analyzer
+POST {{baseUrl}}/_analyze
+
+{
+  "analyzer": "standard",
+  "text":"To be or not to be,  That is a question ———— 莎士比亚"
+}
+### simple analyzer
+POST {{baseUrl}}/_analyze
+
+{
+  "analyzer": "simple",
+  "text":"To be or not to be,  That is a question ———— 莎士比亚"
+}
+### 自定义分析器
+PUT {{baseUrl}}/custom_analyzer
+
+{
+  "settings": {
+    "analysis": {
+      "analyzer": {
+        "my_email_analyzer": {
+          "type": "pattern",
+          "pattern": "\\W|_",
+          "lowercase": true
+        }
+      }
+    }
+  }
+}
+### 测试自定义分析器
+POST {{baseUrl}}/custom_analyzer/_analyze
+
+{
+  "analyzer": "my_email_analyzer",
+  "text": "John.Smith@LIVE.com"
+}
+### 语言分析器
+POST {{baseUrl}}/_analyze
+
+{
+  "analyzer": "chinese",
+  "text":"我是中国人，中华民族是最伟大的民族之一！"
+}
+### 雪球分析器
+POST {{baseUrl}}/_analyze
+
+{
+  "analyzer": "snowball",
+  "text":"To be or not to be, that is a question. 中华民族是最伟大的民族之一！"
+}
+
+### 字符过滤器 ---
+### 字符过滤器 HTML
+POST {{baseUrl}}/_analyze
+
+{
+  "tokenizer": "keyword",
+  "char_filter": ["html_strip"],
+  "text":"<p>I&apos;m so <b>happy</b>!</p>"
+}
+### 映射字符过滤器 ---
+PUT {{baseUrl}}/custom_mapping_analyzer
+
+{
+  "settings": {
+    "analysis": {
+      "analyzer": {
+        "my_name_mapping_analyzer": {
+          "tokenizer": "keyword",
+          "char_filter": [
+            "my_char_filter"
+          ]
+        }
+      },
+      "char_filter": {
+        "my_char_filter": {
+          "type": "mapping",
+          "mappings": [
+            "doudou => 豆豆",
+            "douhua => 豆花"
+          ]
+        }
+      }
+    }
+  }
+}
+###
+DELETE {{baseUrl}}/custom_mapping_analyzer
+### 使用自定义字符过滤器
+POST {{baseUrl}}/custom_mapping_analyzer/_analyze
+
+{
+  "analyzer":"my_name_mapping_analyzer",
+  "text": "I love both doudou and douhua"
+}
+### 模式替换过滤器 ---
+PUT {{baseUrl}}/custom_replace_analyzer
+
+{
+  "settings": {
+    "analysis": {
+      "analyzer": {
+        "my_card_replace_analyzer": {
+          "tokenizer": "keyword",
+          "char_filter": [
+            "my_char_filter"
+          ]
+        }
+      },
+      "char_filter": {
+        "my_char_filter": {
+          "type": "pattern_replace",
+          "pattern": "(\\d+)-(?=\\d)",
+          "replacement": "$1_"
+        }
+      }
+    }
+  }
+}
+###
+POST {{baseUrl}}/custom_replace_analyzer/_analyze
+
+{
+  "analyzer":"my_card_replace_analyzer",
+  "text": "my card number is: 123-456-789"
+}
+### 分词器 ---
+### 电子邮件分词器 uax_url_email
+POST {{baseUrl}}/_analyze
+
+{
+  "tokenizer": "uax_url_email",
+  "text":"this is a test message with url https://consulting.sharepoint.com/:x:/r/sites/test88/_layouts/15/Doc.aspx?sourcedoc=%7BECEAC849-44AB-49C0-9C09-221B5A0EAB89%7D&file=test%20servers%20capacity.xlsx&action=default&mobileredirect=true&cid=d8e9069a-332f-4a8a-9753-aa3c68da0290 and email xyz@live.com"
+}
+
+### 路径层次分词器
+POST {{baseUrl}}/_analyze
+
+{
+  "tokenizer": "path_hierarchy",
+  "text":"/Users/xyz/Downloads/kibana-7.9.3-darwin-x86_64"
+}
+
+### 自定义分词过滤器
+PUT {{baseUrl}}/custom_text_length_filter
+
+{
+  "settings": {
+    "analysis": {
+      "filter": {
+        "my_text_length": {
+          "type": "length",
+          "max": 8,
+          "min": 2
+        }
+      }
+    }
+  }
+}
+###
+POST {{baseUrl}}/custom_text_length_filter/_analyze
+
+{
+  "tokenizer": "standard",
+  "filter": ["my_text_length"],
+  "text":"a Shorter word and another longer word intermediary"
+}
+###
+GET {{baseUrl}}/_analyze
+
+{
+  "tokenizer": "standard",
+  "filter": ["length","lowercase"],
+  "text":"a Shorter word and another longer word intermediary"
+}
+
+### 中文处理的 ik analyzer： ik_max_word，ik_smart
+GET {{baseUrl}}/_analyze
+
+{
+  "analyzer": "ik_max_word",
+  "text": "上海自来水来自海上"
+}
