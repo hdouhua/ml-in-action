@@ -61,11 +61,11 @@ curl -X POST "http://localhost:8000/v1/iris/predict" -H\
 
 also can test via swagger ui at <http://localhost:8000/docs>
 
-## deploy in Docker
+## deploy to Docker
 
 run FastAPI in Docker, https://fastapi.tiangolo.com/deployment/docker/
 
-try to build base image from `python:3.11-alpine`, but haven't done yet.
+try to build base image from `python:3.11-alpine`, but haven't made it.
 
 to chekc if scikit-learn package is installed successfully
 
@@ -73,13 +73,17 @@ to chekc if scikit-learn package is installed successfully
 docker run --rm ml-alpine python -c "import sklearn; sklearn.show_versions()"
 ```
 
+to run in Docker
+
+```shell
+./docker-deploy.sh
+```
+
 ## pack app (source distribution)
 
-install python `build` or `setuptools`.([Packaging tool recommendations](https://packaging.python.org/en/latest/guides/tool-recommendations/#packaging-tool-recommendations))
+install python `build` or `setuptools` as packaging tools ([Packaging tool recommendations](https://packaging.python.org/en/latest/guides/tool-recommendations/#packaging-tool-recommendations)), after packing use `twine` for uploading distributions to [PyPI](https://pypi.org/).
 
 or easily use [`hatch`](https://hatch.pypa.io/latest/config/build/).
-
->please use `twine` for uploading distributions to PyPI.
 
 in this case using `build` for demo,
 
