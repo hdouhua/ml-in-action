@@ -220,7 +220,7 @@ publish package to PyPI, in tradditional way by the tool [`twine`](https://twine
 
 one of classic ML workflow
 
-![](./res/images/classic-ai-workflow.png)
+![](./res/images/ai-classic-workflow.png)
 
 one of ML lifecyle
 
