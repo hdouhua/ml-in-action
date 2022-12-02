@@ -81,40 +81,25 @@ to run in Docker
 
 ## pack app (source distribution)
 
-install python `build` or `setuptools` as packaging tools ([Packaging tool recommendations](https://packaging.python.org/en/latest/guides/tool-recommendations/#packaging-tool-recommendations)), after packing use `twine` for uploading distributions to [PyPI](https://pypi.org/).
-
-or easily use [`hatch`](https://hatch.pypa.io/latest/config/build/).
-
-in this case using `build` for demo,
-
 install build tool
 
 ````shell
 pip install build
 ````
 
-create and edit `setup.py` or `pyproject.toml`(highly recommended), please refer to [setup.py](./setup.py).
+create and edit [`pyproject.toml`](./pyproject.toml) or [`setup.py`](./setup.py.bak).
 
 pack
 
 ```shell
 python -m build --sdist --outdir build
-python setup.py sdist -o build
-python -m build --wheel -o build
 ```
 
 to use (working in development mode)
 
 ```shell
-# will run setup.py
 python -m pip install -e .
 ```
-
-for more reference
-
-- [Packaging and distributing projects](https://packaging.python.org/en/latest/guides/distributing-packages-using-setuptools/)
-- [setuptools Quickstart](https://setuptools.pypa.io/en/latest/userguide/quickstart.html)
-- [sample code of setuptools](https://github.com/pypa/sampleproject/blob/main/setup.py)
 
 ## appendix
 

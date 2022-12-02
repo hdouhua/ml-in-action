@@ -184,9 +184,9 @@ def get_run_time(func, *args):
 
 ### pack - source/module distribution
 
-there are many tools for it, such as tradditional `setuptools` and `twine`, in new way `build` and some easier tools [`hatch`](https://hatch.pypa.io/latest/intro/) and [`flit`](https://flit.pypa.io/en/stable/).
+there are many tools for it, such as tradditional tools `build` or `setuptools` as packaging tools, [`twine`](https://twine.readthedocs.io/en/stable/) for uploading distributions to [PyPI](https://pypi.org/) (please refer to [Packaging tool recommendations](https://packaging.python.org/en/latest/guides/tool-recommendations/#packaging-tool-recommendations)), in new way build with some easier tools [`hatch`](https://hatch.pypa.io/latest/intro/) and [`flit`](https://flit.pypa.io/en/stable/).
 
-use `build` with setuptools as an example,
+in this case, use `build` with setuptools as an example,
 
 install
 
@@ -195,26 +195,33 @@ pip install build
 ```
 
 configure package in the file `pyproject.toml` or `setup.cfg`, please refer to [doc](https://setuptools.pypa.io/en/latest/userguide/quickstart.html).
+>more reference  
+>- [Packaging and distributing projects](https://packaging.python.org/en/latest/guides/distributing-packages-using-setuptools/)
+>- [sample code of setuptools](https://github.com/pypa/sampleproject/blob/main/setup.py)
 
 pack source/module - build a wheel and a sdist (tarball)
 
 ```shell
 python -m build --sdist --outdir build
+python setup.py sdist -o build
+python -m build --wheel -o build
 ```
 
-pip install locally
+install local file
 
 ```shell
 pip install <file_path_to_wheel>
 ```
 
-install package for local testing (development mode)
+or install package for local testing (development mode)
 
 ```shell
+# run setup.py
+python -m pip install -e .
 pip install -e
 ```
 
-publish package to PyPI, in tradditional way by the tool [`twine`](https://twine.readthedocs.io/en/stable/).
+publish package to PyPI ...
 
 ## flow of machine learning
 
