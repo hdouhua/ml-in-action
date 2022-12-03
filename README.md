@@ -243,5 +243,5 @@ PEP stands for Python Enhancement Proposal
 - [A pyproject.toml Developer’s Cheat Sheet](https://betterprogramming.pub/a-pyproject-toml-developers-cheat-sheet-5782801fb3ed)
 - [Awesome pyproject.toml](https://github.com/vinta/awesome-python)
 - [Advanced Visual Studio Code for Python Developers](https://realpython.com/advanced-visual-studio-code-python/)
-- [](https://scikit-hep.org/developer/pep621)
-- [](https://henryiii.github.io/level-up-your-python/notebooks/0%20Intro.html)
+- [Simple Python packaging](https://scikit-hep.org/developer/pep621)
+- [Level Up Your Python](https://henryiii.github.io/level-up-your-python/notebooks/0%20Intro.html)
