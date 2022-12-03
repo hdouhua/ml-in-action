@@ -3,7 +3,7 @@ import org.apache.spark.rdd.RDD
 // 第一步，读取内容
 
 // 设置数据文件的根目录
-val rootPath: String = "/home/dao/spk"
+val rootPath: String = "/home/user/spk"
 val file: String = s"${rootPath}/wikiOfSpark.txt"
  
 // 读取文件内容
