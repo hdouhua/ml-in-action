@@ -8,7 +8,7 @@ requires = [
 [project]
 name = "sklearn-fastapi"
 version = "0.9.1"
-authors = [{ name = "douhua", email = "hdouhua@gmail.com" }]
+authors = [{ name = "douhua", email = "localhost@gmail.com" }]
 description = "machine learning model serving tempalte project with fastapi"
 readme = "README.md"
 requires-python = ">=3.6"
@@ -26,7 +26,7 @@ dependencies = [
 ]
 
 [project.urls]
-Home = "https://github.com/hdouhua/ml-in-action/tree/main/first-ml-model"
+Home = "https://ml-model-serving"
 
 [tool.setuptools]
 package-dir = {"" = "app"}
