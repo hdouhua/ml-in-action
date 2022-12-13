@@ -13,7 +13,8 @@
 - [张量 Tensor](./04-tensor.ipynb)
 - [图像处理 TorchVision](./06-torchvision.ipynb)
 - [卷积神经网络 Convolutional Neural Network](./09-cnn.ipynb)
-- [损失函数是、梯度计算及优化方法 Loss Function](./11-loss-function.md)
+- [损失函数是、梯度计算及优化方法 Loss Function](./11-loss-function-optimizer.md)
+- [实例：构建网络](./14-practice.ipynb)
 
 ## 参考
 
