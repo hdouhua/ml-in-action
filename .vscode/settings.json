@@ -17,10 +17,10 @@
     },
 
     "python.autoComplete.extraPaths": [
-        "~/opt/miniconda3/envs/finlab/lib/python3.9/site-packages"
+        "~/miniconda3/envs/finlab/lib/python3.10/site-packages"
     ],
     "python.analysis.extraPaths": [
-        "~/opt/miniconda3/envs/finlab/lib/python3.9/site-packages",
+        "~/miniconda3/envs/finlab/lib/python3.10/site-packages",
         "${workspaceFolder}/ml-model-serving"
     ],
     //"python.envFile": "",
