@@ -1,0 +1,9 @@
+name: finlab
+channels:
+  - conda-forge
+dependencies:
+  - python=3.11
+  - libblas=*=*accelerate
+  - numpy
+  - jupyter
+  - ipywidgets
