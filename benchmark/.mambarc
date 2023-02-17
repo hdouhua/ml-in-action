@@ -1,0 +1,5 @@
+channels:
+  - conda-forge
+  - https://repo.anaconda.com/pkgs/main
+  - https://repo.anaconda.com/pkgs/free
+  - https://repo.anaconda.com/pkgs/r
