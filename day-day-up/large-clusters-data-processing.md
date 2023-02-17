@@ -392,7 +392,7 @@ CAP Theorem ，在设计分布式系统架构时都会讨论到的一个定理�
 
 在大部分情况下，系统设计都会保留 P 属性，而在 C 和 A 中二选一。
 在日常所用到的开发架构中，有哪些系统是属于 CP 系统，有哪些是 AP 系统又有哪些是 CA 系统呢？
-- CP 系统：Google BigTable, Hbase, MongoDB, Redis, MemCacheDB，这些存储架构都是放弃了高可用性（High Availablity）而选择 CP 属性的。
+- CP 系统：Google BigTable, HBase, MongoDB, Redis, MemCacheDB，这些存储架构都是放弃了高可用性（High Availablity）而选择 CP 属性的。
 - AP 系统：Amazon Dynamo 系统以及它的衍生存储系统 Apache Cassandra 和 Voldemort 都是属于 AP 系统
 - CA 系统：Apache Kafka 是一个比较典型的 CA 系统。(此处是指 Kafka Replication 不保证 P。严格来说，Kafka 放弃 P，支持 CA，是因为 Kafka 原理中当出现单个 Broke 宕机，将要出现分区的时候，直接将该 Broke 从集群中剔除，确保整个集群不会出现 P 现象)
 
