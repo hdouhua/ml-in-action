@@ -1,5 +1,7 @@
 # setup Env for Apple M chip
 
+## with micro-mamba
+
 1. install micromamba, please refer to [mamba doc](https://mamba.readthedocs.io/en/latest/installation.html#automatic-installation)
 
    ```shell
@@ -71,6 +73,19 @@ edit the file `~/micromamba/envs/<YOUR_ENV_NAME>/conda-meta/pinned` and add the 
 libblas=*=*accelerate
 ```
 
+## with mini-conda
+
+[install miniconda3](https://docs.conda.io/en/latest/miniconda.html)
+
+[manage conda env](https://conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html)
+
+install numpy with accelerate, please refer to mamba part
+
+disable auto activation of conda base environment, set environment variable CONDA_AUTO_ACTIVATE_BASE,
+
+```shell
+export CONDA_AUTO_ACTIVATE_BASE=false
+```
 ## create env with yaml spec file
 
 the content of [spec file](./finlab.yaml)
@@ -90,6 +105,7 @@ dependencies:
 create env
 
 ```shelll
+conda env create -f mlab.yaml
 micromamba create -f finlab.yaml
 ```
 

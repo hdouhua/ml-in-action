@@ -1,18 +1,21 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
-# Roughly based on: http://stackoverflow.com/questions/11443302/compiling-numpy-with-openblas-integration
+# SOURCE: https://gist.github.com/markus-beuckelmann/8bc25531b11158431a5b09a45abd6276
 
 from __future__ import print_function
 from time import time
+from datetime import datetime
 import numpy as np
+
+start_time = datetime.now()
 
 # Let's take the randomness out of random numbers (for reproducibility)
 np.random.seed(0)
 
 SIZE = 4096
 A, B = np.random.random((SIZE, SIZE)), np.random.random((SIZE, SIZE))
-C, D = np.random.random((SIZE * 128,)), np.random.random((SIZE * 128,))
+C, D = np.random.random((SIZE * 128, )), np.random.random((SIZE * 128, ))
 E = np.random.random((int(SIZE / 2), int(SIZE / 4)))
 F = np.random.random((int(SIZE / 2), int(SIZE / 2)))
 F = np.dot(F, F.T)
@@ -40,7 +43,7 @@ del C, D
 N = 3
 t = time()
 for i in range(N):
-    np.linalg.svd(E, full_matrices = False)
+    np.linalg.svd(E, full_matrices=False)
 delta = time() - t
 print("SVD of a %dx%d matrix in %0.2f s." % (SIZE / 2, SIZE / 4, delta / N))
 del E
@@ -60,6 +63,8 @@ for i in range(N):
 delta = time() - t
 print("Eigendecomposition of a %dx%d matrix in %0.2f s." % (SIZE / 2, SIZE / 2, delta / N))
 
+end_time = datetime.now()
 print('')
-print('This was obtained using the following Numpy configuration:')
+print(f'TOTAL TIME = {(end_time - start_time).seconds} seconds')
+
 np.__config__.show()

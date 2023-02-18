@@ -1,4 +1,4 @@
-name: finlab
+name: mlab
 channels:
   - conda-forge
   - pytorch
