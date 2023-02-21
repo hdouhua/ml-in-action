@@ -22,3 +22,4 @@ __pycache__/
 torch/ds/cifar*
 torch/models/cifar*
 torch/models/alexnet*
+torch/runs
