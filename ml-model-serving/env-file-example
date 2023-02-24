@@ -1,0 +1,2 @@
+PYTHONHOME=<absolute_path_to_miniconda_home>/miniconda3/envs/mlab
+PYTHONPATH=<absolute_path_to_working_dir>/ml-in-action/ml-model-serving

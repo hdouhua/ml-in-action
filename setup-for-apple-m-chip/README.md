@@ -86,6 +86,7 @@ disable auto activation of conda base environment, set environment variable COND
 ```shell
 export CONDA_AUTO_ACTIVATE_BASE=false
 ```
+
 ## create env with yaml spec file
 
 the content of [spec file](./finlab.yaml)

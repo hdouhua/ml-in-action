@@ -17,6 +17,7 @@ __pycache__/
 .python-version
 .env*
 *.egg-info/
+.coverage
 
 # ignore some too big dataset and models
 torch/ds/cifar*
