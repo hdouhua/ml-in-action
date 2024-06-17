@@ -7,9 +7,8 @@
 ```mermaid
 graph RL
 
-    user -->|3. send request| CLP1
-
     subgraph D[User Device]
+        UA[user app] -->|3. send request| CLP1
         C -->|2. listen on|CLP1((ss\nlocal_port))
 
         subgraph C[ss Client]
@@ -20,7 +19,7 @@ graph RL
         CE -->|4. send request| CLP2((dynamic\nport))
     end
 
-    CLP2 -->|transport| RP
+    CLP2 -->|5. transport| RP
     
     subgraph VPS
         S -->|1. listen on| RP((ss\nremote_port));
@@ -30,11 +29,11 @@ graph RL
             SE[encrypt]
         end
 
-        DE --> |5. send request| SLP((ss\nlocal_port));
+        DE --> |6. send request| SLP((ss\nlocal_port));
 
     end
 
-    SLP -->|6. forward request| IS;
+    SLP -->|7. forward request| IS;
     subgraph IS[international services]
         G(google);
         Y(youtube);
@@ -42,12 +41,7 @@ graph RL
         O(...);
     end
 
-    IS -.->|response| SLP;
-    SLP -.->|response| SE;
-    SE -.->|response| CLP2
-    CLP2 -.->|response| CD;
-    CD -.->|response| CLP1;
-    CLP1 -.->|response| user;
+    IS -.->|response| SLP -.->|response| SE -.->|response| CLP2 -.->|response| CD -.->|response| CLP1 -.->|response| UA;
 
     style D fill:#3ff,stroke:#333,stroke-width:2px;
     style VPS fill:#ccf,stroke:#333,stroke-width:2px;
